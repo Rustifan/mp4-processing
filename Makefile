@@ -23,4 +23,6 @@ db-studio:
 	open https://local.drizzle.studio?port=${DRIZLE_STUDIO_PORT}
 	docker exec -it mp4_api npm run db:studio
 
+nats-tools:
+	docker run --rm -it --network mp4-processing_mp4_network natsio/nats-box
 	

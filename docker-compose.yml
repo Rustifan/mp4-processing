@@ -12,7 +12,7 @@ services:
       - mp4_network
 
   nats:
-    image: nats:2.10.26
+    image: nats:2.10.26-alpine3.21
     container_name: mp4_nats
     networks:
       - mp4_network
@@ -36,6 +36,7 @@ services:
       - ./api-service:/app
       - /app/node_modules
       - ./files:/files
+      - ./processed-files:/processed-files
     depends_on:
       - db
       - nats
@@ -53,6 +54,7 @@ services:
   #   volumes:
   #     - ./processing-service:/app
   #     - ./files:/files
+  #     - ./processed-files:/processed-files
   #   depends_on:
   #     - nats
   #   networks:
