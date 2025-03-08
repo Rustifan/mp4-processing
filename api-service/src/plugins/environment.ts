@@ -10,6 +10,7 @@ const schema = Type.Object({
 type Environment = Static<typeof schema>
 
 export default fp(async (fastify) => {
+
     const environement = envSchema<Environment>({
         schema,
         data: process.env,
@@ -17,7 +18,7 @@ export default fp(async (fastify) => {
     })
 
     fastify.decorate("environment", environement)
-    fastify.log.info("Environemtn loaded")
+    fastify.log.info("Environment loaded")
 }, { name: "environment" })
 
 declare module "fastify" {

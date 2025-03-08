@@ -28,11 +28,14 @@ services:
       DATABASE_URL: postgresql://user:password@db:5432/mp4_db
       NATS_URL: nats://nats:4222
       PORT: ${API_PORT}
+      DRIZZLE_STUDIO_PORT: ${DRIZLE_STUDIO_PORT}
     ports:
       - "${API_PORT}:${API_PORT}"
+      - "${DRIZLE_STUDIO_PORT}:${DRIZLE_STUDIO_PORT}"
     volumes:
       - ./api-service:/app
       - /app/node_modules
+      - ./files:/files
     depends_on:
       - db
       - nats
@@ -49,7 +52,7 @@ services:
   #     FILE_STORAGE_PATH: /app/files
   #   volumes:
   #     - ./processing-service:/app
-  #     - /app/files
+  #     - ./files:/files
   #   depends_on:
   #     - nats
   #   networks:

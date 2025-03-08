@@ -1,10 +1,7 @@
 import { pgTable, text, timestamp, serial, pgEnum } from "drizzle-orm/pg-core";
+import { statusOptions } from "../../config/constants";
 
-export const fileStatusEnum = pgEnum('file_status', [
-    'Processing',
-    'Failed',
-    'Successful',
-]);
+export const fileStatusEnum = pgEnum('file_status', statusOptions);
 
 export const files = pgTable('files', {
     id: serial('id').primaryKey(),

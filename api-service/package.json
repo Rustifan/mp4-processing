@@ -14,7 +14,8 @@
     "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
     "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js",
     "fastify": "fastify",
-    "db": "drizzle-kit --config=drizzle.config.ts"
+    "db": "drizzle-kit --config=drizzle.config.ts",
+    "db:studio": "drizzle-kit studio --port ${DRIZZLE_STUDIO_PORT} --host 0.0.0.0"
   },
   "keywords": [],
   "author": "",

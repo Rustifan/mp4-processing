@@ -23,7 +23,7 @@ const app: FastifyPluginAsync<AppOptions> = async (
   // through your application
   void fastify.register(AutoLoad, {
     dir: join(__dirname, 'plugins'),
-    options: opts
+    options: opts,
   })
 
   // This loads all plugins defined in routes
@@ -33,7 +33,7 @@ const app: FastifyPluginAsync<AppOptions> = async (
     options: opts
   })
 
-  console.log("tu sam")
+
 };
 
 export default app;
