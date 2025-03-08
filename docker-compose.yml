@@ -1,0 +1,63 @@
+services:
+  db:
+    image: postgres:17
+    container_name: mp4_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mp4_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mp4_network
+
+  nats:
+    image: nats:2.10.26
+    container_name: mp4_nats
+    networks:
+      - mp4_network
+
+  api:
+    container_name: mp4_api
+    build:
+      context: ./api-service
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/mp4_db
+      NATS_URL: nats://nats:4222
+      PORT: ${API_PORT}
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    volumes:
+      - ./api-service:/app
+      - /app/node_modules
+    depends_on:
+      - db
+      - nats
+    networks:
+      - mp4_network
+
+  # processor:
+  #   container_name: mp4_processor
+  #   build:
+  #     context: ./processing-service
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     NATS_URL: nats://nats:4222
+  #     FILE_STORAGE_PATH: /app/files
+  #   volumes:
+  #     - ./processing-service:/app
+  #     - /app/files
+  #   depends_on:
+  #     - nats
+  #   networks:
+  #     - mp4_network
+
+volumes:
+  postgres_data:
+
+networks:
+  mp4_network:
+    driver: bridge
