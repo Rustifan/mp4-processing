@@ -10,8 +10,13 @@ async function fileExists(filePath: string) {
     }
 }
 
+async function deleteFile(filePath: string) {
+    return fs.rm(filePath)
+}
+
 const diskOperations = {
-    fileExists
+    fileExists,
+    deleteFile
 } as const
 
 export default fp(async (fastify) => {

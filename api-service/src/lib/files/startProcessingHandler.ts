@@ -23,12 +23,10 @@ export async function startProcessingHandler(
         );
     }
 
-    await natsClient.publish("process_file", { filePath })
+    await natsClient.publish("process_file", { filePath });
 
     return {
         success: true,
         message: "Processing started",
     };
 }
-
-

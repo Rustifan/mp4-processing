@@ -8,7 +8,12 @@ export type File = typeof files.$inferSelect
 export class FileRepository {
     constructor(private dependencies: BasicRepoProps) { }
     async getAll(): Promise<Array<File>> {
-        return await this.dependencies.db.select().from(files).execute()
+        return this.dependencies.db.select().from(files).execute()
+    }
+
+    async getById(id: number): Promise<File | null> {
+        const results = await this.dependencies.db.select().from(files).where(eq(files.id, id))
+        return results.at(0) ?? null
     }
 
     async insertFile(filePath: string, status: File["status"] = "Processing"): Promise<QueryResult> {
