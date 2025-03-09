@@ -12,13 +12,13 @@ export async function updateFileStatus(
         payload.status === "Successful" ? payload.procssedFilePath : undefined;
     try {
         const updateResult = await repositories.file.updateFileStatus(
-            payload.id,
+            payload.filePath,
             payload.status,
             processedFilePath
         );
         updateResult.rowCount
-            ? log.info(`Updated file with id ${payload.id}`)
-            : log.error(`File with id ${payload.id} not updated`);
+            ? log.info(`Updated file with path ${payload.filePath}`)
+            : log.error(`File with path ${payload.filePath} not updated`);
     } catch (error) {
         log.error("Something went wrong");
     }

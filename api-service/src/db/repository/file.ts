@@ -25,8 +25,8 @@ export class FileRepository {
         return this.dependencies.db.delete(files).where(eq(files.id, id))
     }
 
-    async updateFileStatus(id: number, status: FileStatus, processedFilePath?: string): Promise<QueryResult<never>> {
-        return this.dependencies.db.update(files).set({ status, processedFilePath }).where(eq(files.id, id))
+    async updateFileStatus(filePath: string, status: FileStatus, processedFilePath?: string): Promise<QueryResult<never>> {
+        return this.dependencies.db.update(files).set({ status, processedFilePath }).where(eq(files.filePath, filePath))
     }
 }
 

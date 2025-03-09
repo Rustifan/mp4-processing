@@ -11,7 +11,7 @@ const NATS_TOPICS = {
     }),
     update_file: Type.Union([
         Type.Object({
-            id: Type.Number(),
+            filePath: Type.String(),
             status: Type.Union(
                 statusOptions
                     .filter((key) => key !== "Successful")
@@ -19,7 +19,7 @@ const NATS_TOPICS = {
             ),
         }),
         Type.Object({
-            id: Type.Number(),
+            filePath: Type.String(),
             status: Type.Literal("Successful"),
             procssedFilePath: Type.String(),
         }),

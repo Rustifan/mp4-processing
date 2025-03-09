@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/rustifan/mp4-processing/processing-service/config"
+	"github.com/rustifan/mp4-processing/processing-service/internal/file"
 	"github.com/rustifan/mp4-processing/processing-service/internal/logger"
 	"github.com/rustifan/mp4-processing/processing-service/internal/processor"
 	"github.com/rustifan/mp4-processing/processing-service/internal/transport/nats"
@@ -35,8 +36,8 @@ func main() {
 		os.Exit(1)
 	}
 	defer natsConn.Close()
-
-	proc := processor.NewProcessor(logger, cfg)
+	publisher := nats.NewPublisher(natsConn, logger)
+	proc := processor.NewProcessor(logger, cfg, file.NewFileReader(logger), publisher)
 
 	subscriber := nats.NewSubscriber(natsConn, logger)
 	subscribeError := subscriber.QueueSubscribe(cfg.ProcessFileTopic, cfg.ProcessFileQueue, proc.ProcessFile)
