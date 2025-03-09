@@ -1,8 +1,9 @@
 import { describe, it } from "node:test";
-import { getFilePathInFilesFolder, getFilePathInProcessedFilesFolder } from "../../../src/lib/files/utils";
+import { getFilePathInFilesFolder, getFilePathInProcessedFilesFolder, getVerifiedTypeFromSchemaOrThrow } from "../../../src/lib/files/utils";
 import * as assert from 'node:assert'
+import { Type } from "@sinclair/typebox";
 
-describe("utils test suite", () => {
+describe("utils test suite for joining paths", () => {
     it("should return joined path", () => {
         const filePath = "test.png"
         const result = getFilePathInFilesFolder(filePath)
@@ -24,5 +25,22 @@ describe("utils test suite", () => {
         const filePath = "./test"
         const result = getFilePathInProcessedFilesFolder(filePath)
         assert.equal(result, "/processed_files/test")
+    })
+})
+
+describe("typebox parser test", () => {
+    const schema = Type.Object({
+        test: Type.String(),
+        other: Type.String()
+    })
+    it("should throw error", () => {
+        assert.throws(() => {
+            const obj = {
+                test: "test",
+                other: 12
+            }
+            getVerifiedTypeFromSchemaOrThrow(obj, schema)
+
+        })
     })
 })

@@ -2,6 +2,7 @@ import { QueryResult } from "pg"
 import { BasicRepoProps } from "."
 import { files } from "../schema/files"
 import { eq } from "drizzle-orm"
+import { FileStatus } from "../../config/constants"
 
 export type File = typeof files.$inferSelect
 
@@ -24,6 +25,9 @@ export class FileRepository {
         return this.dependencies.db.delete(files).where(eq(files.id, id))
     }
 
+    async updateFileStatus(id: number, status: FileStatus, processedFilePath?: string): Promise<QueryResult<never>> {
+        return this.dependencies.db.update(files).set({ status, processedFilePath }).where(eq(files.id, id))
+    }
 }
 
 

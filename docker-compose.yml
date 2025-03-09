@@ -43,6 +43,30 @@ services:
     networks:
       - mp4_network
 
+  api_subscriber:
+    container_name: mp4_api_subscriber
+    build:
+      context: ./api-service
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/mp4_db
+      NATS_URL: nats://nats:4222
+      PORT: ${API_PORT}
+      DRIZZLE_STUDIO_PORT: ${DRIZLE_STUDIO_PORT}
+    volumes:
+      - ./api-service:/app
+      - /app/node_modules
+      - ./files:/files
+      - ./processed-files:/processed-files
+    depends_on:
+      - db
+      - nats
+    networks:
+      - mp4_network
+    entrypoint: ["npm", "run", "subscriber:dev"]
+
   # processor:
   #   container_name: mp4_processor
   #   build:

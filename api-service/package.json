@@ -15,7 +15,9 @@
     "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js",
     "fastify": "fastify",
     "db": "drizzle-kit --config=drizzle.config.ts",
-    "db:studio": "drizzle-kit studio --port ${DRIZZLE_STUDIO_PORT} --host 0.0.0.0"
+    "db:studio": "driczzle-kit studio --port ${DRIZZLE_STUDIO_PORT} --host 0.0.0.0",
+    "subscriber": "npm run build:ts && node dist/subscriber.js",
+    "subscriber:dev": "node --watch-path dist dist/subscriber.js "
   },
   "keywords": [],
   "author": "",
@@ -40,7 +42,6 @@
     "concurrently": "^9.0.0",
     "drizzle-kit": "^0.30.5",
     "fastify-tsconfig": "^2.0.0",
-    "ts-node": "^10.4.0",
     "tsx": "^4.19.3",
     "typescript": "~5.6.3"
   }
