@@ -67,22 +67,22 @@ services:
       - mp4_network
     entrypoint: ["npm", "run", "subscriber:dev"]
 
-  # processor:
-  #   container_name: mp4_processor
-  #   build:
-  #     context: ./processing-service
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     NATS_URL: nats://nats:4222
-  #     FILE_STORAGE_PATH: /app/files
-  #   volumes:
-  #     - ./processing-service:/app
-  #     - ./files:/files
-  #     - ./processed-files:/processed-files
-  #   depends_on:
-  #     - nats
-  #   networks:
-  #     - mp4_network
+  processor:
+    container_name: mp4_processor
+    build:
+      context: ./processing-service
+      dockerfile: Dockerfile
+    environment:
+      NATS_URL: nats://nats:4222
+      AIR_ENV: development
+    volumes:
+      - ./processing-service:/app
+      - ./files:/files
+      - ./processed-files:/processed-files
+    depends_on:
+      - nats
+    networks:
+      - mp4_network
 
 volumes:
   postgres_data:

@@ -5,7 +5,7 @@ import { envSchema } from "env-schema"
 const schema = Type.Object({
     DATABASE_URL: Type.String(),
     NATS_URL: Type.String(),
-    PORT: Type.String(),
+    PORT: Type.String()
 })
 type Environment = Static<typeof schema>
 
