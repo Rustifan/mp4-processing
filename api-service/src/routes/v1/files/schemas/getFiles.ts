@@ -14,6 +14,9 @@ const fileDtoSchema = Type.Object({
     processedFilePath: Type.Union([Type.String(), Type.Null()], {
         description: "Path of processed file",
     }),
+    message: Type.Union([Type.String(), Type.Null()], {
+        description: "Status message",
+    }),
 });
 
 const filesDtoSchema = Type.Array(fileDtoSchema);

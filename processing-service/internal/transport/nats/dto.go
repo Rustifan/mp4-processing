@@ -8,4 +8,5 @@ type FileUpdateTopicDto struct {
 	FilePath         string `json:"filePath"`
 	Status           string `json:"status"`
 	ProcssedFilePath string `json:"procssedFilePath"`
+	Message          string `json:"message"`
 }

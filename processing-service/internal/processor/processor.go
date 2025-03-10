@@ -44,19 +44,19 @@ func (processor *Processor) ProcessFile(data []byte) error {
 
 	fileData, err := processor.fileReaderWriter.ReadFile(filePathInContainer)
 	if err != nil {
-		publishProcessingFail(processor.config, processor.publisher, filePath)
+		publishProcessingFail(processor.config, processor.publisher, filePath, err)
 		return err
 	}
 	initSegment, _, err := GetInitializationSegment(fileData)
 	if err != nil {
-		publishProcessingFail(processor.config, processor.publisher, filePath)
+		publishProcessingFail(processor.config, processor.publisher, filePath, err)
 		return err
 	}
 	initSegmentPath := getInitSegmentPath(filePath)
 	err = processor.fileReaderWriter.WriteFile(file.GetProcessedFilePath(processor.config, initSegmentPath), initSegment)
 	processor.log.Info("Found initilization segment", "segment", initSegment)
 	if err != nil {
-		publishProcessingFail(processor.config, processor.publisher, filePath)
+		publishProcessingFail(processor.config, processor.publisher, filePath, err)
 		return err
 	}
 	processor.log.Info("Saved initilization segment to disk")
@@ -64,10 +64,11 @@ func (processor *Processor) ProcessFile(data []byte) error {
 	return publishProcessingSuccess(processor.config, processor.publisher, filePath, initSegmentPath)
 }
 
-func publishProcessingFail(config *config.Config, publisher *nats.Publisher, filePath string) error {
+func publishProcessingFail(config *config.Config, publisher *nats.Publisher, filePath string, err error) error {
 	dto := nats.FileUpdateTopicDto{
 		FilePath: filePath,
 		Status:   "Failed",
+		Message:  err.Error(),
 	}
 	jsonData, err := json.Marshal(dto)
 	if err != nil {

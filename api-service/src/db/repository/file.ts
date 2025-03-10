@@ -32,10 +32,11 @@ export class FileRepository {
         filePath: string,
         status: FileStatus,
         processedFilePath?: string,
+        message?: string,
     ): Promise<QueryResult<never>> {
         return this.dependencies.db
             .update(files)
-            .set({ status, processedFilePath })
+            .set({ status, processedFilePath, message })
             .where(eq(files.filePath, filePath));
     }
 }

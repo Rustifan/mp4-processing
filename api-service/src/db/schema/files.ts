@@ -13,6 +13,7 @@ export const files = pgTable(
         processedFilePath: text("processed_file_path"),
         createdAt: timestamp("created_at").defaultNow(),
         updatedAt: timestamp("updated_at").defaultNow(),
+        message: text("message"),
     },
     (table) => [uniqueIndex("file_path_idx").on(table.filePath)],
 );

@@ -17,6 +17,7 @@ const NATS_TOPICS = {
                     .filter((key) => key !== "Successful")
                     .map((option) => Type.Literal(option)),
             ),
+            message: Type.Optional(Type.String()),
         }),
         Type.Object({
             filePath: Type.String(),
