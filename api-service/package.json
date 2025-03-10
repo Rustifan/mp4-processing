@@ -25,6 +25,8 @@
   "dependencies": {
     "@fastify/autoload": "^6.0.0",
     "@fastify/sensible": "^6.0.0",
+    "@fastify/swagger": "^9.4.2",
+    "@fastify/swagger-ui": "^5.2.2",
     "@sinclair/typebox": "^0.34.28",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.40.0",

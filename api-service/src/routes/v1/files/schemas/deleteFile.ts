@@ -1,20 +1,23 @@
 import { Static, Type } from "@sinclair/typebox";
 import { FastifySchema } from "fastify";
+import { errorResponseSchema } from ".";
 
 const deleteFileParamsSchema = Type.Object({
-    id: Type.Number()
+    id: Type.Number({ description: "Id of a file process that you want to delete" })
 })
 const responseSchema = Type.Object({
-    success: Type.Boolean(),
-    message: Type.String()
+    success: Type.Boolean({ description: "Success flag" }),
+    message: Type.String({ description: "Message description" })
 })
 const response = {
-    200: responseSchema
+    200: responseSchema,
+    default: errorResponseSchema
 }
 
 export const deleteFileSchema: FastifySchema = {
     params: deleteFileParamsSchema,
-    response
+    response,
+    tags: ["delete-file"]
 }
 
 export type DeleteFileParams = Static<typeof deleteFileParamsSchema>
