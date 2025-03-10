@@ -128,6 +128,12 @@ make api-exec
 make api-test
 ```
 
+- `proc-test`: Run tests inside the processor service container.
+
+```bash
+make proc-test
+```
+
 - `db-connect`: Connect to the PostgreSQL database using `psql`.
 
 ```bash

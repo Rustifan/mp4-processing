@@ -13,6 +13,9 @@ api-exec:
 api-test:
 	docker exec -it mp4_api npm run test
 
+proc-test:
+	docker exec -it mp4_processor go test ./...
+
 db-connect:
 	docker exec -it mp4_db psql postgresql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)
 

@@ -25,9 +25,15 @@ func parseBox(boxType [4]byte, data []byte) (Box, []byte, error) {
 	boxSize := binary.BigEndian.Uint32(data[:SIZE_INDICATOR_SIZE])
 	data = data[SIZE_INDICATOR_SIZE:]
 
-	boxTypeFromData := string(data[:len(boxType)])
-	if boxTypeString != boxTypeFromData {
-		return Box{}, data, errors.New("Failed to parse " + boxTypeString + " Found " + boxTypeFromData)
+	actualBoxType := [4]byte{
+		data[0],
+		data[1],
+		data[2],
+		data[3],
+	}
+	if actualBoxType != boxType {
+		return Box{}, data[SIZE_INDICATOR_SIZE:],
+			errors.New("Failed to parse " + string(boxType[:]) + " Found " + string(actualBoxType[:]))
 	}
 	data = data[len(boxType):]
 	leftBytesToParse := boxSize - SIZE_INDICATOR_SIZE - boxTypeLen
@@ -35,7 +41,7 @@ func parseBox(boxType [4]byte, data []byte) (Box, []byte, error) {
 	boxData := data[:leftBytesToParse]
 	restOfData := data[leftBytesToParse:]
 
-	return Box{Size: boxSize, Type: boxType, Data: boxData}, restOfData, nil
+	return Box{Size: boxSize, Type: actualBoxType, Data: boxData}, restOfData, nil
 }
 
 func GetInitializationSegment(file []byte) ([]byte, []byte, error) {

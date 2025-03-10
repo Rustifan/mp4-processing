@@ -22,13 +22,13 @@ describe("utils test suite for joining paths", () => {
     it("should return joined path", () => {
         const filePath = "test.png";
         const result = getFilePathInProcessedFilesFolder(filePath);
-        assert.equal(result, "/processed_files/test.png");
+        assert.equal(result, "/processed-files/test.png");
     });
 
     it("should also work if file is defined with ./", () => {
         const filePath = "./test";
         const result = getFilePathInProcessedFilesFolder(filePath);
-        assert.equal(result, "/processed_files/test");
+        assert.equal(result, "/processed-files/test");
     });
 });
 
