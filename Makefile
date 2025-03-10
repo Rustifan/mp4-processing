@@ -19,6 +19,9 @@ db-connect:
 db-push: 
 	docker exec -it mp4_api npm run db push
 
+db-generate:
+	docker exec -it mp4_api npm run db generate
+
 db-studio: 
 	open https://local.drizzle.studio?port=${DRIZLE_STUDIO_PORT}
 	docker exec -it mp4_api npm run db:studio

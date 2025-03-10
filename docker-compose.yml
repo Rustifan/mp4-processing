@@ -34,7 +34,7 @@ services:
       - "${DRIZLE_STUDIO_PORT}:${DRIZLE_STUDIO_PORT}"
     volumes:
       - ./api-service:/app
-      - /app/node_modules
+      - api_node_modules:/app/node_modules
       - ./files:/files
       - ./processed-files:/processed-files
     depends_on:
@@ -66,6 +66,7 @@ services:
     networks:
       - mp4_network
     entrypoint: ["npm", "run", "subscriber:dev"]
+    restart: always
 
   processor:
     container_name: mp4_processor
@@ -86,7 +87,8 @@ services:
 
 volumes:
   postgres_data:
-
+  api_node_modules:
+  
 networks:
   mp4_network:
     driver: bridge
