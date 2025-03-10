@@ -6,7 +6,7 @@ type Props = Pick<FastifyInstance, "repositories" | "log">;
 
 export async function updateFileStatus(
     { repositories, log }: Props,
-    payload: Static<NatsTopics["update_file"]>
+    payload: Static<NatsTopics["update_file"]>,
 ) {
     const processedFilePath =
         payload.status === "Successful" ? payload.procssedFilePath : undefined;
@@ -14,7 +14,7 @@ export async function updateFileStatus(
         const updateResult = await repositories.file.updateFileStatus(
             payload.filePath,
             payload.status,
-            processedFilePath
+            processedFilePath,
         );
         updateResult.rowCount
             ? log.info(`Updated file with path ${payload.filePath}`)

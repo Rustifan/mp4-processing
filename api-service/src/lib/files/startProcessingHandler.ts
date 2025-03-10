@@ -9,7 +9,7 @@ export type Props = Pick<
 
 export async function startProcessingHandler(
     { repositories, httpErrors, diskOperations, natsClient }: Props,
-    filePath: string
+    filePath: string,
 ): Promise<StartProcessingResponse> {
     const pathInFilesFolder = getFilePathInFilesFolder(filePath);
     const fileExistsInFolder = await diskOperations.fileExists(pathInFilesFolder);
@@ -18,9 +18,7 @@ export async function startProcessingHandler(
     }
     const result = await repositories.file.insertFile(filePath);
     if (!result.rowCount || result.rowCount < 1) {
-        throw httpErrors.internalServerError(
-            "Something went wrong while saving data to db"
-        );
+        throw httpErrors.internalServerError("Something went wrong while saving data to db");
     }
 
     await natsClient.publish("process_file", { filePath });

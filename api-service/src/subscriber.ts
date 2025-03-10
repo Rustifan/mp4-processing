@@ -28,10 +28,10 @@ async function main() {
         "update_file",
         (data) => updateFileStatus(app, data),
         (error) => {
-            app.log.error("Error happened while parsing subscription message")
-            console.log(error)
+            app.log.error("Error happened while parsing subscription message");
+            console.log(error);
         },
-        { queue: "update_file_queue" }
+        { queue: "update_file_queue" },
     );
 }
 

@@ -1,5 +1,5 @@
-import fp from 'fastify-plugin'
-import fs from "fs/promises"
+import fp from "fastify-plugin";
+import fs from "fs/promises";
 
 async function fileExists(filePath: string) {
     try {
@@ -11,21 +11,20 @@ async function fileExists(filePath: string) {
 }
 
 async function deleteFile(filePath: string) {
-    return fs.rm(filePath)
+    return fs.rm(filePath);
 }
 
 const diskOperations = {
     fileExists,
-    deleteFile
-} as const
+    deleteFile,
+} as const;
 
 export default fp(async (fastify) => {
-    fastify.decorate("diskOperations", diskOperations)
-})
+    fastify.decorate("diskOperations", diskOperations);
+});
 
-
-declare module 'fastify' {
+declare module "fastify" {
     export interface FastifyInstance {
-        diskOperations: typeof diskOperations
+        diskOperations: typeof diskOperations;
     }
 }

@@ -15,7 +15,7 @@ const NATS_TOPICS = {
             status: Type.Union(
                 statusOptions
                     .filter((key) => key !== "Successful")
-                    .map((option) => Type.Literal(option))
+                    .map((option) => Type.Literal(option)),
             ),
         }),
         Type.Object({
@@ -30,11 +30,11 @@ export type NatsTopics = typeof NATS_TOPICS;
 type NatsTopic = keyof typeof NATS_TOPICS;
 
 class NatsClient {
-    constructor(private nc: NatsConnection) { }
+    constructor(private nc: NatsConnection) {}
     public async publish<TTopic extends NatsTopic>(
         topic: TTopic,
         payload: Static<NatsTopics[TTopic]>,
-        options?: PublishOptions
+        options?: PublishOptions,
     ): Promise<void> {
         const stringifiedPayload = JSON.stringify(payload);
         return this.nc.publish(topic, stringifiedPayload, options);
@@ -44,7 +44,7 @@ class NatsClient {
         topic: TTopic,
         onData: (data: Static<NatsTopics[TTopic]>) => void,
         onError?: (error: unknown) => void,
-        options?: SubscriptionOptions
+        options?: SubscriptionOptions,
     ) {
         const subOptions: SubscriptionOptions = {
             ...(options ?? {}),
@@ -61,7 +61,7 @@ class NatsClient {
                     onError && onError(error);
                 }
             },
-        }
+        };
         this.nc.subscribe(topic, subOptions);
     }
 }
@@ -74,7 +74,7 @@ export default fp(
         const natsClient = new NatsClient(nc);
         fastify.decorate("natsClient", natsClient);
     },
-    { dependencies: ["environment"] }
+    { dependencies: ["environment"] },
 );
 
 declare module "fastify" {
